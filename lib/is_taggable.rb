@@ -9,40 +9,40 @@ module IsTaggable
       has_many :taggings, :as => :taggable
       has_many :tags, :through => :taggings do
         def to_s
-          self.map(&:name).sort.join(Tag::JOIN_DELIMITER)
+          self.map(&:name).join(Tag::JOIN_DELIMITER)
         end
         def all_except_starred
           self.reject{|tag| tag.name == Todo::STARRED_TAG_NAME}
         end
       end
-      
+
       def tag_list
         tags.reload
         tags.to_s
       end
-            
+
       def tag_list=(value)
         tag_with(value)
       end
-      
+
       # Replace the existing tags on <tt>self</tt>. Accepts a string of tagnames, an array of tagnames, or an array of Tags.
       def tag_with list
         list = tag_cast_to_string(list)
-  
+
         # Transactions may not be ideal for you here; be aware.
         Tag.transaction do
           current = tags.map(&:name)
           _add_tags(list - current)
           _remove_tags(current - list)
         end
-  
+
         self
       end
 
       def has_tag?(tag_name)
         return tags.any? {|tag| tag.name == tag_name}
       end
-      
+
       # Add tags to <tt>self</tt>. Accepts a string of tagnames, an array of tagnames, or an array of Tags.
       #
       # We need to avoid name conflicts with the built-in ActiveRecord association methods, thus the underscores.
@@ -66,7 +66,7 @@ module IsTaggable
         outgoing = tag_cast_to_string(outgoing)
         tags.destroy(*(tags.select{|tag| outgoing.include? tag.name}))
       end
-      
+
       def get_tag_name_from_item(item)
         case item
         # removed next line as it prevents using numbers as tags
@@ -94,8 +94,8 @@ module IsTaggable
           raise "Invalid object of class #{obj.class} as tagging method parameter"
         end
       end
-            
+
     end
   end
-  
+
 end
