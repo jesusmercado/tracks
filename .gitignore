@@ -1,6 +1,7 @@
 *.DS_Store
 *.tmproj
 *~
+*.swp
 .dotest
 .idea
 .rvmrc
@@ -25,3 +26,5 @@ db/data.yml
 nbproject
 rerun.txt
 tags
+.vagrant/
+Vagrantfile
