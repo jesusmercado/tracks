@@ -41,6 +41,8 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 1.2'
 
+gem 'rails_12factor'
+
 group :development do
   gem "yard"
   gem "tolk", git: 'https://github.com/tolk/tolk'
