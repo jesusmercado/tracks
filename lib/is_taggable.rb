@@ -9,7 +9,7 @@ module IsTaggable
       has_many :taggings, :as => :taggable
       has_many :tags, :through => :taggings do
         def to_s
-          self.map(&:name).join(Tag::JOIN_DELIMITER)
+          self.map(&:name).sort.join(Tag::JOIN_DELIMITER)
         end
         def all_except_starred
           self.reject{|tag| tag.name == Todo::STARRED_TAG_NAME}
